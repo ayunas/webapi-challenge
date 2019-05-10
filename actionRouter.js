@@ -33,12 +33,30 @@ actionRouter.post('/', (req,res) => {
     const newAction = req.body;
     actionDB.insert(newAction)
     .then( newAction => {
-        res.status(204).json(newAction);
+        res.status(201).json(newAction);
     })
     .catch( err => {
         res.status(500).json(err.message);
     })
 })
+
+actionRouter.put('/', (req,res) => {
+    const id = req.body.id
+    const updateAction = req.body;
+    actionDB.update(id , updateAction)
+    .then(updatedAction => {
+        if (updatedAction) {
+            res.status(200).json(updatedAction);
+        } else {
+            res.status(404).json({error : `id # ${id} was not found in the database`});
+        }
+    })
+    .catch( err => {
+        res.status(500).json({error : err.message})
+    })
+})
+
+
 
 
 
