@@ -14,4 +14,32 @@ actionRouter.get('/', (req,res) => {
     })    
 })
 
+actionRouter.get('/:id', (req,res) => {
+    const id = req.params.id;
+    actionDB.get(id)
+    .then( action => {
+        // if (action) {
+            res.status(200).json(action);
+        // } else {
+        //     res.status(404).json({error : `no user with id #: ${id}`});
+        // }    
+    })
+    .catch( err => {
+        res.status(500).json({error : 'server unable to retrive action'});
+    })
+})
+
+actionRouter.post('/', (req,res) => {
+    const newAction = req.body;
+    actionDB.insert(newAction)
+    .then( newAction => {
+        res.status(204).json(newAction);
+    })
+    .catch( err => {
+        res.status(500).json(err.message);
+    })
+})
+
+
+
 module.exports = actionRouter;
