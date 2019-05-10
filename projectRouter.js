@@ -30,5 +30,34 @@ projectRouter.get('/:id', (req,res) => {
     })
 })
 
+projectRouter.post('/', (req,res) => {
+    const newProject = req.body;
+    projectDB.insert(newProject)
+    .then( newlyCreatedProject => {
+        res.status(201).json(newlyCreatedProject);
+    })
+    .catch( err => {
+        res.status(500).json(err.message);
+    })
+})
+
+projectRouter.put('/', (req,res) => {
+    const id = req.body.id;
+    const updateToProject = req.body;
+
+    projectDB.update(id, updateToProject)
+    .then( updatedProject => {
+        if (updatedProject) {
+            res.status(202).json(updatedProject);
+        } else {
+            res.status(404).json({error : `Cannot update. Project with id # ${id} not found`})
+        }
+        
+    })
+    .catch( err => {
+        res.status(500).json(err.message);
+    })
+})
+
 
 module.exports = projectRouter;
