@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import Projects from './Projects';
-import Actions from './Actions';
+import Header from './Header';
+import Footer from './Footer';
+// import Actions from './Actions';
 import axios from 'axios';
 
 
@@ -31,8 +33,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Header/>
         <Projects projects={this.state.projects} />
-        <Actions projects={this.state.projects}/>
+        {/* <Actions projects={this.state.projects}/> */}
+        <Footer/>
       </div>
     );
   }
