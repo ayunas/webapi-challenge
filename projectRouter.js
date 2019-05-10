@@ -4,7 +4,6 @@ const projectRouter = express.Router();
 
 const projectDB = require('./data/helpers/projectModel');
 
-
 projectRouter.get('/', (req,res) => {
     projectDB.get()
     .then( projects => {
