@@ -59,5 +59,19 @@ projectRouter.put('/', (req,res) => {
     })
 })
 
+projectRouter.delete('/', (req,res) => {
+    const id = req.body.id;
+    projectDB.remove(id)
+    .then( delCount => {
+        if (delCount > 0) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({error : `project with id # ${id} not found`});
+        }
+    })
+    .catch( err => {
+        res.status(500).json(err);
+    })
+})
 
 module.exports = projectRouter;
