@@ -56,6 +56,27 @@ actionRouter.put('/', (req,res) => {
     })
 })
 
+actionRouter.delete('/', (req,res) => {
+    const id = req.body.id;
+    // console.log(req.body);
+    // console.log(req.params);
+    // actionDB.remove(id)
+    // res.status(200).json({requestBody : req.body,
+    //     requestParams : req.params
+    // })
+    actionDB.remove(id)
+    .then(delCount => {
+        if (delCount > 0) {
+            res.status(204).end();
+        } else {
+            res.status(400).json({error : `the action id # ${id} wasn't found`});
+        }
+    })
+    .catch( err => {
+        res.status(500).json({error : err});
+    })
+})
+
 
 
 
