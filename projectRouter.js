@@ -74,4 +74,16 @@ projectRouter.delete('/', (req,res) => {
     })
 })
 
+projectRouter.get('/:id/actions' , (req,res) => {
+    const id = req.params.id;
+    // res.send(req.params.id);
+    projectDB.getProjectActions(id)
+    .then( actions => {
+        res.status(200).json(actions);
+    })
+    .catch( err => {
+        res.status(500).json(err);
+    })
+})
+
 module.exports = projectRouter;
