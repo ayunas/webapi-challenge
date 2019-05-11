@@ -42,12 +42,12 @@ img {
 .actions {
   padding: 10px;
   color : rgb(101, 17, 11);
-  
+  /* border : 3px solid rgb(101, 17, 11); */
 }
-
-.active {
-  display : none;
-}
+/* 
+.true {
+  display: none;
+} */
 
 button {
   background-color : rgb(101, 17, 11);
