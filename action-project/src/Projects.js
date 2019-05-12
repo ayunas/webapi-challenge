@@ -27,13 +27,14 @@ export default class Projects extends Component {
         })
       .catch( err => console.log(err))
   }
-  
+
   render() {
     return (
       <div className='projects'>
         {this.props.projects.map( (project,i) => 
         <div key={i}>
-            <h3> <small> { project.id } </small>{project.name}</h3>
+            <h2> <small> {i+1}. </small>{project.name}</h2>
+            <h4>{project.description}</h4>
             <button onClick={ () => this.action(project.id)}>view project actions</button>
             {this.state.actionFlag && this.state.actions.map( (action,j) => 
             <div className='actions' key={`action-${j}`} > {action.project_id === project.id && action.description} </div> 

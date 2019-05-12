@@ -43,7 +43,24 @@ img {
   padding: 10px;
   color : rgb(101, 17, 11);
   /* border : 3px solid rgb(101, 17, 11); */
+  font-weight: bolder;
+  font-size: 25px;
 }
+
+h4 {
+  font-weight: 100;
+  width: 50%;
+  margin-left : 25%;
+}
+
+small {
+  font-size: 25px;
+}
+
+header img {
+  width: 100px;
+}
+
 /* 
 .true {
   display: none;

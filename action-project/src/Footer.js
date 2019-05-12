@@ -11,9 +11,9 @@ export default function Footer() {
             <p><strong>Built with:</strong></p>
          </div>
         <div className='tech'>
-            <img src={react}/>
-            <img src={node}/>
-            <img src={express}/>
+            <img src={react} alt='react'/>
+            <img src={node} alt='node'/>
+            <img src={express} alt='express'/>
         </div>
     </footer>
   )
