@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+header,footer {
+  background-color : rgb(101, 17, 11);
+  color : white;
+  list-style: none;
+  padding: 10px;
+}
+
+h3 {
+  font-size : 30px;
+}
+
+img {
+  width: 75px;
+  margin: 10px;
+}
+
+.tech {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projects {
+  padding: 30px;
+}
+
+.actions {
+  padding: 10px;
+  color : rgb(101, 17, 11);
+  /* border : 3px solid rgb(101, 17, 11); */
+  font-weight: bolder;
+  font-size: 25px;
+}
+
+h4 {
+  font-weight: 100;
+  width: 50%;
+  margin-left : 25%;
+}
+
+small {
+  font-size: 25px;
+}
+
+header img {
+  width: 100px;
+}
+
+/* 
+.true {
+  display: none;
+} */
+
+button {
+  background-color : rgb(101, 17, 11);
+  font-size: 20px;
+  color : white;
+  border-radius: 30px;
+  padding: 10px;
+  width: 150px;
+  outline: none;
+}
