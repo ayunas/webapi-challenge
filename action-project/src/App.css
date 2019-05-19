@@ -13,15 +13,20 @@
   color: white;
 }
 
-header,footer {
-  background-color : rgb(101, 17, 11);
-  color : white;
+header,
+footer {
+  background-color: rgb(101, 17, 11);
+  color: white;
   list-style: none;
   padding: 10px;
 }
 
+h2 {
+  font-size: 30px;
+}
+
 h3 {
-  font-size : 30px;
+  font-size: 30px;
 }
 
 img {
@@ -41,7 +46,7 @@ img {
 
 .actions {
   padding: 10px;
-  color : rgb(101, 17, 11);
+  color: rgb(101, 17, 11);
   /* border : 3px solid rgb(101, 17, 11); */
   font-weight: bolder;
   font-size: 25px;
@@ -50,7 +55,7 @@ img {
 h4 {
   font-weight: 100;
   width: 50%;
-  margin-left : 25%;
+  margin-left: 25%;
 }
 
 small {
@@ -67,11 +72,18 @@ header img {
 } */
 
 button {
-  background-color : rgb(101, 17, 11);
-  font-size: 20px;
-  color : white;
+  background-color: rgb(101, 17, 11);
+  font-size: 15px;
+  color: white;
   border-radius: 30px;
   padding: 10px;
+  margin: 10px;
   width: 150px;
   outline: none;
+}
+
+input {
+  width: 200px;
+  margin: 10px;
+  height: 30px;
 }
