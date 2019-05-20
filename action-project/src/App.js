@@ -32,19 +32,12 @@ class App extends React.Component {
       });
   }
 
-  // addProject = () => {
-  //   console.log("adding a project");
-  //   axios.post("http://localhost:5555/projects");
-  // };
-
   render() {
     return (
       <div className="App">
         <Header />
         <AddProject />
-        {/* <button onClick={this.addProject}>Add Project</button> */}
         <Projects projects={this.state.projects} />
-        {/* <Actions projects={this.state.projects}/> */}
         <Footer />
       </div>
     );

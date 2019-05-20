@@ -9,7 +9,9 @@ export default class Projects extends Component {
       taskFlag: false,
       modFlag: false,
       tasks: [],
-      hide: false
+      hide: false,
+      project: "",
+      description: ""
     };
   }
 
@@ -42,10 +44,31 @@ export default class Projects extends Component {
       });
   };
 
-  modify = id => {
-    console.log(`modifying project with id: ${id}`);
+  modToggle = id => {
     this.setState({
       modFlag: !this.state.modFlag
+    });
+  };
+
+  modify = id => {
+    console.log(`modifying project with id: ${id}`);
+    axios
+      .put(`http://localhost:5555/projects/${id}`, {
+        project: this.state.project,
+        description: this.state.description
+      })
+      .then(res => {
+        console.log("good axios put", res.data);
+      })
+      .catch(err => {
+        console.error("axios put error", err);
+      });
+  };
+
+  input = e => {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
     });
   };
 
@@ -61,13 +84,23 @@ export default class Projects extends Component {
             </h2>
             <h4>{project.description}</h4>
             <button onClick={() => this.task(project.id)}>view tasks</button>
-            <button onClick={() => this.modify(project.id)}>
+            <button onClick={() => this.modToggle(project.id)}>
               Modify Project
             </button>
             {this.state.modFlag && (
-              <form>
-                <input name="project" placeholder="Project Name" />
-                <input name="description" placeholder="Project Description" />
+              <form onSubmit={() => this.modify(project.id)}>
+                <input
+                  name="project"
+                  placeholder="Project Name"
+                  value={this.state.project}
+                  onChange={this.input}
+                />
+                <input
+                  name="description"
+                  placeholder="Project Description"
+                  value={this.state.description}
+                  onChange={this.input}
+                />
                 <button>Submit</button>
               </form>
             )}
