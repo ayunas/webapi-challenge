@@ -11,7 +11,8 @@ export default class Projects extends Component {
       tasks: [],
       hide: false,
       project: "",
-      description: ""
+      description: "",
+      projectID: null
     };
   }
 
@@ -46,24 +47,25 @@ export default class Projects extends Component {
 
   modToggle = id => {
     this.setState({
-      modFlag: !this.state.modFlag
+      modFlag: !this.state.modFlag,
+      projectID: id
     });
   };
 
-  modify = id => {
-    console.log(`modifying project with id: ${id}`);
-    axios
-      .put(`http://localhost:5555/projects/${id}`, {
-        project: this.state.project,
-        description: this.state.description
-      })
-      .then(res => {
-        console.log("good axios put", res.data);
-      })
-      .catch(err => {
-        console.error("axios put error", err);
-      });
-  };
+  // modify = id => {
+  //   console.log(`modifying project with id: ${id}`);
+  //   axios
+  //     .put(`http://localhost:5555/projects/${id}`, {
+  //       project: this.state.project,
+  //       description: this.state.description
+  //     })
+  //     .then(res => {
+  //       console.log("good axios put", res.data);
+  //     })
+  //     .catch(err => {
+  //       console.error("axios put error", err);
+  //     });
+  // };
 
   input = e => {
     e.preventDefault();
@@ -87,8 +89,17 @@ export default class Projects extends Component {
             <button onClick={() => this.modToggle(project.id)}>
               Modify Project
             </button>
-            {this.state.modFlag && (
-              <form onSubmit={() => this.modify(project.id)}>
+            {this.state.modFlag && project.id === this.state.projectID && (
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.props.modify(
+                    project.id,
+                    this.state.project,
+                    this.state.description
+                  );
+                }}
+              >
                 <input
                   name="project"
                   placeholder="Project Name"

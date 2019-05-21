@@ -14,7 +14,9 @@ class App extends React.Component {
     this.state = {
       projects: [],
       url2: "http://ec2-3-215-148-99.compute-1.amazonaws.com:5000/projects",
-      url: "http://localhost:5555/projects"
+      url: "http://localhost:5555/projects",
+      project: "",
+      description: ""
     };
   }
 
@@ -32,12 +34,33 @@ class App extends React.Component {
       });
   }
 
+  modify = (id, project, description) => {
+    console.log(`modifying ${project} with id: ${id}`);
+    axios
+      .put(`http://localhost:5555/projects/${id}`, {
+        project: project,
+        description: description
+      })
+      .then(res => {
+        console.log("good axios put", res.data);
+        this.setState({
+          project: res.data.project,
+          description: res.data.description
+        });
+      })
+      .catch(err => {
+        console.error("axios put error", err);
+      });
+    this.setState({ state: this.state });
+    // window.location.reload();
+  };
+
   render() {
     return (
       <div className="App">
         <Header />
         <AddProject />
-        <Projects projects={this.state.projects} />
+        <Projects projects={this.state.projects} modify={this.modify} />
         <Footer />
       </div>
     );
