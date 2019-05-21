@@ -12,7 +12,12 @@ export default class Projects extends Component {
       hide: false,
       project: "",
       description: "",
-      projectID: null
+      projectID: null,
+      url: "http://ec2-3-215-148-99.compute-1.amazonaws.com:5000/projects",
+      addTaskToggle: false,
+      addedTask: "",
+      addedTaskDesc: "",
+      taskID: null
     };
   }
 
@@ -21,9 +26,9 @@ export default class Projects extends Component {
       taskFlag: !this.state.taskFlag,
       hide: !this.state.hide
     });
-    // axios.get(`http://ec2-3-215-148-99.compute-1.amazonaws.com:5000/projects/${id}/actions`)
+
     axios
-      .get(`http://localhost:5555/projects/${id}`)
+      .get(`${this.state.url}/${id}`)
       .then(res => {
         console.log("res.data from task display", res.data);
         this.setState({
@@ -36,7 +41,7 @@ export default class Projects extends Component {
   delete = id => {
     console.log(`deleting project with id: ${id}`);
     axios
-      .delete(`http://localhost:5555/projects/${id}`)
+      .delete(`${this.state.url}${id}`)
       .then(res => {
         console.log(`the response from the delete request: ${res.data}`);
       })
@@ -49,6 +54,14 @@ export default class Projects extends Component {
     this.setState({
       modFlag: !this.state.modFlag,
       projectID: id
+    });
+  };
+
+  addTaskToggle = id => {
+    console.log("%c addTaskToggle triggered!", "font-size: 20px; color: red");
+    this.setState({
+      addTaskToggle: !this.state.addTaskToggle,
+      taskID: id
     });
   };
 
@@ -93,24 +106,20 @@ export default class Projects extends Component {
               <form
                 onSubmit={e => {
                   e.preventDefault();
-                  this.props.modify(
-                    project.id,
-                    this.state.project,
-                    this.state.description
-                  );
+                  this.props.modify(project.id);
                 }}
               >
                 <input
                   name="project"
                   placeholder="Project Name"
-                  value={this.state.project}
-                  onChange={this.input}
+                  value={this.props.project}
+                  onChange={this.props.input}
                 />
                 <input
                   name="description"
                   placeholder="Project Description"
-                  value={this.state.description}
-                  onChange={this.input}
+                  value={this.props.description}
+                  onChange={this.props.input}
                 />
                 <button>Submit</button>
               </form>
@@ -122,9 +131,50 @@ export default class Projects extends Component {
               this.state.tasks.map((task, j) => (
                 <div className="actions" key={`action-${j}`}>
                   {" "}
-                  {task.project_id === project.id && task.description}{" "}
+                  {task.project_id === project.id && (
+                    <div>
+                      {j + 1} . {task.task} : {task.description}
+                    </div>
+                  )}{" "}
                 </div>
               ))}
+            {this.state.taskFlag && (
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  this.addTaskToggle(project.id);
+                }}
+              >
+                Add Task
+              </button>
+            )}
+            {this.state.addTaskToggle && project.id === this.state.taskID && (
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.props.addTask(
+                    this.state.addedTask,
+                    this.state.addedTaskDesc,
+                    project.id
+                  );
+                }}
+              >
+                <input
+                  name="addedTask"
+                  placeholder="Task Name"
+                  value={this.state.addedTask}
+                  onChange={this.input}
+                />
+                <input
+                  name="addedTaskDesc"
+                  placeholder="Describe Task"
+                  value={this.state.addedTaskDesc}
+                  onChange={this.input}
+                />
+
+                <button>Submit</button>
+              </form>
+            )}
           </div>
         ))}
       </div>

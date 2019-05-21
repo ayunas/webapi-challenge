@@ -4,7 +4,6 @@ import Projects from "./Projects";
 import Header from "./Header";
 import Footer from "./Footer";
 import AddProject from "./AddProject";
-// import Actions from './Actions';
 import axios from "axios";
 
 class App extends React.Component {
@@ -13,16 +12,61 @@ class App extends React.Component {
 
     this.state = {
       projects: [],
-      url2: "http://ec2-3-215-148-99.compute-1.amazonaws.com:5000/projects",
-      url: "http://localhost:5555/projects",
+      url: "http://ec2-3-215-148-99.compute-1.amazonaws.com:5000",
       project: "",
-      description: ""
+      description: "",
+      addedTask: ""
     };
   }
 
-  componentDidMount() {
+  modify = id => {
+    console.log(`modifying ${this.state.project} with id: ${id}`);
     axios
-      .get(this.state.url)
+      .put(`${this.state.url}/projects/${id}`, {
+        project: this.state.project,
+        description: this.state.description
+      })
+      .then(res => {
+        console.log("good axios put", res.data);
+        this.setState({
+          ...this.state
+        });
+      })
+      .catch(err => {
+        console.error("axios put error", err);
+      });
+  };
+
+  input = e => {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  addTask = (task, description, id) => {
+    console.log(
+      "%cthis is the task to be added",
+      "color:green;",
+      task,
+      description
+    );
+    axios
+      .post(`${this.state.url}/tasks`, { task, description, project_id: id })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          addedTask: res.data.task
+        });
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  };
+
+  componentDidMount = () => {
+    axios
+      .get(`${this.state.url}/projects`)
       .then(res => {
         console.log(res);
         this.setState({
@@ -32,35 +76,30 @@ class App extends React.Component {
       .catch(err => {
         console.log(err);
       });
-  }
-
-  modify = (id, project, description) => {
-    console.log(`modifying ${project} with id: ${id}`);
-    axios
-      .put(`http://localhost:5555/projects/${id}`, {
-        project: project,
-        description: description
-      })
-      .then(res => {
-        console.log("good axios put", res.data);
-        this.setState({
-          project: res.data.project,
-          description: res.data.description
-        });
-      })
-      .catch(err => {
-        console.error("axios put error", err);
-      });
-    this.setState({ state: this.state });
-    // window.location.reload();
+    this.setState({
+      ...this.state
+    });
   };
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState !== this.state) {
+  //     this.setState({ ...this.state });
+  //   }
+  // }
 
   render() {
     return (
       <div className="App">
         <Header />
         <AddProject />
-        <Projects projects={this.state.projects} modify={this.modify} />
+        <Projects
+          projects={this.state.projects}
+          modify={this.modify}
+          input={this.input}
+          project={this.state.project}
+          description={this.state.description}
+          addTask={this.addTask}
+        />
         <Footer />
       </div>
     );
